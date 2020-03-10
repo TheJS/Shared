@@ -1,0 +1,533 @@
+﻿;-
+;[作者]
+;QQ：970610722
+;Facebook：theJS3
+;Instagram：ba.jos
+;E-mail：Jos3@qq.com
+;-
+
+#NoEnv ;新脚本必备
+#Persistent ;持续运行
+#NoTrayIcon ;不显示托盘图标
+#WinActivateForce ;激活指定窗口时，使用强制
+#SingleInstance FORCE ;禁止多开，替换旧版
+if not A_IsAdmin	;管理员权限打开
+{
+Run *RunAs "%A_ScriptFullPath%"
+ExitApp
+}
+SetBatchLines -1 ;脚本全速运行
+StringCaseSense, On ;字符比较区分大小写
+
+Gui, +OwnDialogs
+Gui, Color, cF0F0F0
+theBB:="3.2"
+newBB:="正式版"
+;Gui, add, button, x130 y35 g测试, 测试钮
+;gosub, Sub1
+gosub, 生成关于
+gosub, 生成打赏
+gosub, 生成主窗口
+
+
+生成关于:
+Gui, gy:Default
+Gui, +HwndGY_ID
+Gui, add, Text,cADADAD x5 y5, 版本：%theBB%
+Gui, add, Text, cBlue x10 y20,〖更新详情〗
+Gui, add, Edit, ReadOnly cBlue x10 y35 w180 h300,【3.2】`n1.修复了返回游戏后显示鼠标的情况。`n`n【3.1】`n<赞助专版>1.修复在游戏外按T、Y弹出输入器的情况。`n1.添加Enter键快速回到游戏并发送，需在游戏中先打开输入框(仅支持无边框、窗口模式使用)。`n`n【3.0】`n<赞助专版>1.添加T、Y键快速呼出功能(仅支持无边框、窗口模式使用)。`n输入完按Enter会自动回到游戏并发送。`n`n【2.1】`n1.呼出/隐藏键改为Alt+~。`n`n【2.0】`n1.版本1.6产生不可预期的BUG，改回1.5版并做部分优化。`n`n【1.6】`n1.优化输入方式。`n2.快捷键不会与<自动挂机>冲突。`n`n【1.5】`n1.Alt+Tab切换后可以直接进行打字。`n`n【1.3】`n无。`n`n【1.2】`n1.输入后发言内容自动清空。`n`n【1.1】`n1.界面优化。`n`n【1.0】`n1.移除全体/队伍选项，更改为手动。`n2.添加“关于＆更新”页面。`n3.快捷键改为F1输入，需先手动按T或Y。`n`n【Beta3.0】`n1.因应吧友反馈Enter快速输入会影响游戏原生输入，故移除Enter输入。`n`n【Beta2.0】`n1.添加Alt+F1一键呼出/隐藏。`n2.发炎模式改为发言模式。`n3.呼出后自动聚焦至输入框。`n4.按Enter直接发送至游戏。5.其他一些小小小BUG。`n`n【Alpha4.0】`n1.添加了全体/队伍发言切换。`n2.修复了一些你看不见的BUG(#滑稽)。`n`n【Alpha2.0】`n无更多内容。
+Gui, add, Text, cRed x200 y20,〖感谢名单〗
+Gui, add, Edit, ReadOnly cRed x200 y35 w180 h300,1.感谢贴吧：传说的九尾(QQ：114****956)`n→协助测试、管理。ヽ(ﾟ∀ﾟ)ﾒ(ﾟ∀ﾟ)ﾉ 
+Gui, Add, Link, vjiaqun cBlue x10 y340, ·以上信息最后更新时间2020年1月24日。 ·QQ群：<a href="http://jq.qq.com/?_wv=1027&k=5RdWZjS">52365898</a> & <a href="http://jq.qq.com/?_wv=1027&k=5Ff9tCn">717147870</a>
+GuiControl, gy:Focus, jiaqun
+Gui, gy:Show, Hide w390 h360, 关于＆更新
+return
+
+生成打赏:
+Gui, ds:Default
+Gui, +HwndDS_ID
+Gui, add, Text,cADADAD x5 y5, 版本：%theBB%
+Gui, add, Text,cADADAD x20 y25, 感谢您的支持，请参考主窗口联络方式。
+Gui, ds:Show, Hide w300 h50, 打赏
+return
+
+生成主窗口:
+Gui, Main:Default
+Gui, +HwndMAIN_ID
+Gui, add, Text,cADADAD x5 y5, 版本：%theBB%
+Gui, add, Edit, v输入框 x4 y65 w240 h90,
+Gui, add, Text,cRed x10 y20,  F1发送: 回到游戏打开输入框后按F1`nEnter发送: 先在游戏中打开输入框 ;、 F2:队伍发送、 F3:全部发送
+Gui, add, CheckBox, cGreen vSFZD g是否置顶 x200 y5, 置顶
+Gui, add, Text, c0080FF x10 y50 w500, 发言内容：
+Gui, add, CheckBox, cGreen vTYHC  x10 y165 Disabled, [T、Y键呼出 → Enter键发送]
+Gui, Add, Link, cBlue x115 y190,　[随缘打赏/小费↓]`n·QQ：<a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=970610722">970610722</a>`n·Facebook：<a href="http://facebook.com/theJS3">theJS3</a>`n·Instagram：<a href="http://instagram.com/thej3">thej3</a>`n·E-mail：<a href="mailto:Jos3@qq.com">Jos3@qq.com</a>
+Menu, TheMenu, Add, &×使用说明, M_SYSM
+Menu, TheMenu, Add, &☆关于＆更新, M_GY
+Menu, TheMenu, Add, &$打赏, M_DS
+Gui, Menu, TheMenu
+GuiControl, Main:Focus, 输入框
+Gui, Show, Restore w250 h260, R6S中文输入器
+WinWaitClose, ahk_id %MAIN_ID%
+	ExitApp
+return
+
+是否置顶:
+	Gui, Main:Submit, NoHide ;刷新Gui
+	GuiControlGet, SFZD
+	If(SFZD=1)
+	{
+		WinSet AlwaysOnTop, On, ahk_id %MAIN_ID%
+	}
+else
+	WinSet AlwaysOnTop, Off, ahk_id %MAIN_ID%
+return
+
+IfWinActive, "Rainbow Six"
+
+M_SYSM:
+MsgBox, % 4+64+4096+262144, QQ：970610722, 使用说明？不存在的`n`n要不加QQ？, 5
+IfMsgBox Yes
+run, tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=970610722
+return	
+
+M_GY:
+	WinSet, Disable , ahk_id %MAIN_ID%
+Gui, gy:Show, Restore
+WinSet AlwaysOnTop, On, ahk_id %GY_ID%
+;Gui, Main:Show, Hide
+WinWaitClose, ahk_id %GY_ID%
+	WinSet AlwaysOnTop, Off, ahk_id %GY_ID%
+	WinSet, Enable, ahk_id %MAIN_ID%
+	Gui, Main:Show, Restore
+	Gui, gy:Show, Hide
+return	
+
+M_DS:
+	WinSet, Disable, ahk_id %MAIN_ID%
+Gui, ds:Show, Restore
+WinSet AlwaysOnTop, On, ahk_id %DS_ID%
+;Gui, Main:Show, Hide
+WinWaitClose, ahk_id %DS_ID%
+	WinSet AlwaysOnTop, Off, ahk_id %DS_ID%
+	WinSet, Enable, ahk_id %MAIN_ID%
+	Gui, Main:Show, Restore
+	Gui, ds:Show, Hide
+return	
+
+~Enter::
+If(WinActive("R6S中文输入器"))
+{
+		GuiControl, Main:Disable, 输入框
+		gosub, R6JD
+		gosub, Input80bit
+}
+return
+
+$^F1::
+gosub, R6JD
+sleep, 10
+Send {T Down}
+Send {T Up}
+SendInput {*}
+SendInput {彩}
+SendInput {虹}
+SendInput {六}
+SendInput {号}
+SendInput {吧}
+Send {Space Down}
+Send {Space Up}
+SendInput {搜}
+SendInput {索}
+SendInput {:}
+Send {Space Down}
+Send {Space Up}
+SendInput {中}
+SendInput {文}
+SendInput {输}
+SendInput {入}
+SendInput {器}
+Send {Enter Down}
+Send {Enter Up}
+return
+
+$^F2::
+gosub, R6JD
+sleep, 10
+Send {T Down}
+Send {T Up}
+SendInput {*}
+SendInput {请}
+SendInput {加}
+SendInput {Q}
+SendInput {Q}
+SendInput {群}
+SendInput {:}
+Send {Space Down}
+Send {Space Up}
+SendInput {5}
+SendInput {2}
+SendInput {3}
+SendInput {6}
+SendInput {5}
+SendInput {8}
+SendInput {9} 
+SendInput {8}
+Send {Enter Down}
+Send {Enter Up}
+return
+
+$^F3::
+gosub, R6JD
+sleep, 10
+Send {T Down}
+Send {T Up}
+SendInput {*}
+SendInput {请}
+SendInput {加}
+SendInput {我}
+SendInput {Q}
+SendInput {Q}
+SendInput {:}
+Send {Space Down}
+Send {Space Up}
+SendInput {9}
+SendInput {7}
+SendInput {0}
+SendInput {6}
+SendInput {1}
+SendInput {0}
+SendInput {7} 
+SendInput {2}
+SendInput {2}
+Send {Enter Down}
+Send {Enter Up}
+return
+
+$^F4::
+gosub, R6JD
+sleep, 10
+Send {T Down}
+Send {T Up}
+SendInput {*}
+SendInput {请}
+SendInput {加}
+SendInput {我}
+SendInput {I}
+SendInput {n}
+SendInput {s}
+SendInput {t}
+SendInput {a}
+SendInput {g}
+SendInput {r}
+SendInput {a}
+SendInput {m}
+SendInput {:}
+Send {Space Down}
+Send {Space Up}
+SendInput {b}
+SendInput {a}
+SendInput {.}
+SendInput {j}
+SendInput {o}
+SendInput {s}
+Send {Enter Down}
+Send {Enter Up}
+return
+
+R6JD:
+WinRestore,Rainbow Six ;指定窗口还原
+ControlFocus,, Rainbow Six ;指定窗口获取焦点
+return
+
+SpaceReplace:
+if(newText=""){
+Send {Enter Down}
+Send {Enter Up}
+Send {ESC Down}
+Send {ESC Up}
+Send {ESC Down}
+Send {ESC Up}
+GuiControl, Main:, 输入框,
+GuiControl, Main:Enable, 输入框
+Exit
+}else if(newText="｀"){
+Send {Space Down}
+Send {Space Up}
+}else{
+SendInput {%newText%}
+}
+return
+
+$F1::
+GuiControl, Main:Disable, 输入框
+gosub, R6JD
+gosub, Input80bit
+return
+
+Input80bit:
+if WinActive("Rainbow Six"){
+Gui, Main:Submit, NoHide ;刷新Gui
+StringReplace, theText, 输入框, `n, , ALL ;替换全部换行为
+GuiControl, Main:, 输入框, %theText%
+StringReplace, theText, theText, %A_SPACE%, ｀, ALL ;替换全部空格
+StringReplace, theText, theText, ｀｀, ｀, ALL ;替换全部空格
+StringReplace, theText, theText, ｀｀, ｀, ALL ;替换全部空格
+StringReplace, theText, theText, ｀｀, ｀, ALL ;替换全部空格
+sleep, 10
+StringMid, newText, theText, 1, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 2, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 3, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 4, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 5, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 6, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 7, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 8, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 9, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 10, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 11, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 12, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 13, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 14, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 15, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 16, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 17, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 18, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 19, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 20, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 21, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 22, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 23, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 24, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 25, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 26, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 27, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 28, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 29, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 30, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 31, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 32, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 33, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 34, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 35, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 36, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 37, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 38, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 39, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 40, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 41, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 42, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 43, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 44, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 45, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 46, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 47, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 48, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 49, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 50, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 51, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 52, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 53, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 54, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 55, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 56, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 57, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 58, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 59, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 60, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 61, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 62, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 63, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 64, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 65, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 66, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 67, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 68, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 69, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 70, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 71, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 72, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 73, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 74, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 75, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 76, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 77, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 78, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 79, 1
+gosub, SpaceReplace
+sleep, 10
+StringMid, newText, theText, 80, 1
+gosub, SpaceReplace
+Send {Enter Down}
+Send {Enter Up}
+Send {ESC Down}
+Send {ESC Up}
+Send {ESC Down}
+Send {ESC Up}
+GuiControl, Main:, 输入框,
+}
+GuiControl, Main:Enable, 输入框
+return
+
+OnExit:
+	ExitApp
+return
+
+GuiClose:
+	ExitApp
+return
